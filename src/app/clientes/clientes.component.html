@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <div class="row align-items-start row-form-regis-cliente">
+    <div class="col">
+      <div class="card">
+
+        <div class="card-body">
+          <h5 class="card-title">Registrar Cliente</h5>
+
+          <form [formGroup]="registrarClienteForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-row">
+              <div class="col-md-6 mb-6">
+                <label for="nombre">
+                  Nombre
+                </label>
+                <input id="nombre" class="form-control" type="text" formControlName="nombres">
+              </div>
+              <div class="col-md-6 mb-6">
+                <label for="apellidos">
+                  Apellido
+                </label>
+                <input id="apellidos" class="form-control" type="text" formControlName="apellidos">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-2 mb-2">
+                <label for="edad">
+                  Edad
+                </label>
+                <input [(ngModel)]="edadActual" value="{{valEdad}}" id="edad" class="form-control" type="text"
+                  formControlName="edad" disabled>
+              </div>
+              <div class="col-md-10 mb-10">
+                <label for="fecNacimiento">
+                  Fecha de Nacimiento
+                </label>
+                <div class="input-group">
+                  <input id="fecNacimiento" class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model"
+                    (ngModelChange)="calcularEdad()" formControlName="fecNacimiento" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <button class="btn btn-primary" type="submit">Registrar</button>
+
+          </form>
+
+        </div>
+      </div>
+      <div class="card card-calculo-clientes">
+        <div class="card-body d-inline-flex">
+          <div class="col-6 justify-content-center align-items-center">
+            <h6 class="titulo-circulo">Promedio de edades</h6>
+            <div class="circulo-r justify-content-center  d-flex align-items-center">
+              <h1>{{kpiDto.promedioEdad | number:'2.1-1'}}</h1>
+            </div>
+          </div>
+          <div class="col-6">
+            <h6 class="titulo-circulo">Desviación estandar</h6>
+            <div class="circulo-r justify-content-center  d-flex align-items-center">
+              <h1>{{kpiDto.desviacionEstandar | number:'2.1-1'}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card list-clientes">
+        <div class="card-body">
+          <h5 class="card-title">Listado de Clientes</h5>
+          <table class="table table-striped">
+            <tbody>
+              <tr *ngFor="let cliente of listClientes">
+                <td>{{cliente.nombre}} {{cliente.apellido}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row align-items-start">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Detalle de Clientes</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" sortable="name">Nombres</th>
+                <th scope="col" sortable="area">Apellidos</th>
+                <th scope="col" sortable="population">Edad</th>
+                <th scope="col" sortable="population">Fecha de Nacimiento</th>
+                <th scope="col" sortable="population">Fecha probable de muerte</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of listClientes; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ cliente.nombre}}</td>
+                <td>{{ cliente.apellido}}</td>
+                <td>{{ cliente.edad}}</td>
+                <td>{{ cliente.fecNacomiento}}</td>
+                <td>{{ cliente.fechaMuerte}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
